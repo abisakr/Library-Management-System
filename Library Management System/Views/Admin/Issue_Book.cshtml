@@ -1,0 +1,46 @@
+﻿@using Library_Management_System.Models
+
+@model Library_Management_System.DTO.IssueBookDto
+
+<form method="post" asp-action="Issue_Book" asp-controller="Admin">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Issue Book</h2>
+            <hr />
+        </div>
+     <div class=" row mb-3">
+           
+         <div class="col">
+            <label asp-for="BookId"></label>
+                <input type="number" asp-for="BookId" class="form-control" />
+                <span asp-validation-for="BookId" class="text-danger"></span>
+            </div>
+       
+        <div class=" col mb-3">
+            <label asp-for="StudentId"></label>
+                <input type="number"  asp-for="StudentId" class="form-control" />
+                <span asp-validation-for="StudentId" class="text-danger"></span>
+
+        </div>
+          
+        </div>
+       
+            <button class=" btn btn-primary " type="submit" style="width:150px">Issue</button>
+            <a asp-controller="Home" asp-action="Button" class=" btn btn-secondary " style="width:150px">Back</a>
+       
+    </div>
+</form>
+
+
+@*
+
+            Book Title: The title of the book.
+Author: The author(s) of the book.
+Publication Year: The year the book was published.
+ISBN: The International Standard Book Number (ISBN) of the book.
+Issue Details:
+
+Issue Date: The date when the book is being issued to the member.
+Due Date: The date by which the book should be returned.
+Return Date: The date when the book is actually returned by the member.
+Fine Amount*@

@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Button";
+}
+<head>
+    <link href="~/css/stylesheet.css" rel="stylesheet" />
+
+</head>
+<h1 class="display-4"> Welcome To Library Management System</h1>
+<div class="m-3 p-4" >
+
+
+    <div class="row mb-3">
+
+        <div class="col mb-3">  <button>  <a class="m-3 p-4" asp-controller="Admin" asp-action="Manage_Book">Manage Book</a>  </button>  </div>
+        <div class="col mb-3"> <button> <a class="m-3 p-4" asp-controller="Admin" asp-action="Manage_User">Manage User</a></button></div>
+        <div class="col mb-3"> <button> <a class="m-3 p-4" asp-controller="Admin" asp-action="Issue_Book">Issue Book</a></button>  </div>
+    
+  
+    </div>
+
+    <div class="row mb-3">
+      <div class="col mb-3">  <button> <a class="m-3 p-4" asp-controller="Admin" asp-action="Issue_Request">Issue Request </a></button>  </div>
+        <div class="col mb-3"> <button>  <a class="m-3 p-4" asp-controller="Admin" asp-action="Return">Return Book</a></button>  </div>
+        <div class="col mb-3">  <button> <a class="m-3 p-4" asp-controller="Admin" asp-action="Manage_Students">Manage Students </a></button>  </div>
+
+  </div>
+</div>
+
+

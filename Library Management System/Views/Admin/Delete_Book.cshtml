@@ -1,0 +1,52 @@
+﻿@model Book
+<form  method="post" asp-controller="Admin" asp-action="DeleteBook">
+    <input asp-for="BookId" hidden />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Delete User</h2>
+            <hr />
+        </div>
+
+        <div class=" row mb-3">
+            <div class=" col mb-3">
+                <label  asp-for="BookId"></label>
+                <input disabled asp-for="BookId" class="form-control" />
+                <span asp-validation-for="BookId" class="text-danger"></span>
+            </div>
+            <div class=" col mb-3">
+                <label asp-for="BookName"></label>
+                <input disabled asp-for="BookName" class="form-control" />
+                <span asp-validation-for="BookName" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class=" row mb-3">
+            <div class=" col mb-3">
+                <label asp-for="Auther"></label>
+                <input disabled asp-for="Auther" class="form-control" />
+                <span asp-validation-for="Auther" class="text-danger"></span>
+
+            </div>
+            <div class=" col mb-3">
+                <label >Faculty</label>
+                <input disabled asp-for=" BFaculty" class="form-control" />
+                <span asp-validation-for="BFaculty" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class=" row mb-3">
+            <div class=" col mb-3">
+                <label asp-for="NoOfBooks"></label>
+                <input disabled asp-for="NoOfBooks" class="form-control" />
+                <span asp-validation-for="NoOfBooks" class="text-danger"></span>
+
+            </div>
+            <div class=" col mb-3">
+              
+            </div>
+        </div>
+        <button class=" btn btn-danger " type="submit" style="width:150px">Delete</button>
+        <a asp-controller="Admin" asp-action="Manage_Book" class=" btn btn-secondary " style="width:150px">Back</a>
+    </div>
+</form>
+

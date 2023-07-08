@@ -1,0 +1,38 @@
+﻿@model User
+<form method="post" asp-action="EditUser">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Edit User</h2>
+            <hr />
+        </div>
+
+        <div class=" row mb-3">
+            <div class=" col mb-3">
+                <label asp-for="UserId"></label>
+                <input  asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class=" col mb-3">
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class=" row mb-3">
+            <div class=" col mb-3">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+            </div>
+            <div class=" col mb-3">
+               
+
+            </div>
+        </div>
+       
+        <button class=" btn btn-primary " type="submit" style="width:150px">Update</button>
+        <a asp-controller="Admin" asp-action="Manage_User" class=" btn btn-secondary " style="width:150px">Back</a>
+    </div>
+</form>

@@ -1,0 +1,41 @@
+﻿@using Library_Management_System.DTO;
+@model StudentDto
+<form method="post" asp-controller="Admin" asp-action="EditUser">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Edit Student</h2>
+            <hr />
+        </div>
+
+        <div class=" row mb-3">
+            <div class=" col mb-3">
+                <label asp-for="StudentId"></label>
+                <input  asp-for="StudentId" class="form-control" />
+                <span asp-validation-for="StudentId" class="text-danger"></span>
+            </div>
+            <div class=" col mb-3">
+                <label asp-for="StudentName"></label>
+                <input asp-for="StudentName" class="form-control" />
+                <span asp-validation-for="StudentName" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class=" row mb-3">
+            <div class=" col mb-3">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+
+            </div>
+            <div class=" col mb-3">
+                <label asp-for="Faculty"></label>
+                <input asp-for="Faculty" class="form-control" />
+                <span asp-validation-for="Faculty" class="text-danger"></span>
+
+            </div>
+        </div>
+
+        <button class=" btn btn-primary " type="submit" style="width:150px">Update</button>
+        <a asp-controller="Admin" asp-action="Manage_Students" class=" btn btn-secondary " style="width:150px">Back</a>
+    </div>
+</form>

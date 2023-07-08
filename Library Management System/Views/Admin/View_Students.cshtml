@@ -1,0 +1,87 @@
+﻿@*@using Library_Management_System.DTO;
+@using Library_Management_System.Models
+
+@model IEnumerable<IssueBookDto>
+
+<div class="border container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Students</h2>
+          
+        </div>
+      
+    </div>
+    <hr />
+    <table id="example" class="table table-bordered table-striped " style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                Id
+                </th>
+                <th>
+                    StudentName
+                </th>
+                <th>
+                    Address
+                </th>
+               
+                <th>
+                    Faculty
+                </th>
+                <th>
+                    BookName
+                </th> 
+                <th>
+                    Auther
+                </th>
+                <th>
+                    Action
+                </th>
+              
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td width="10%">
+                        @obj.StudentId
+                    </td>
+                    <td width="30%">
+                        @obj.StudentName
+
+                    </td>
+                    <td width="30%">
+                        @obj.StudentName
+
+                    </td>
+                    <td width="30%">
+                        @obj.Address
+
+                    </td>
+                    <td width="50%">
+                        @obj.Faculty
+
+                    </td>
+                    <td width="30%">
+                        @obj.BookName
+
+                    </td>
+                    <td width="30%">
+                        @obj.Auther
+
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Admin" asp-action="Edit_Book" asp-route-id="@obj.StudentId" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
+                            <a asp-controller="Admin" asp-action="Delete_Book" asp-route-id="@obj.StudentId" class="btn btn-danger mx-2"><i class="bi bi-trash-fill"></i>Delete</a>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+        <a asp-controller="Home" asp-action="Button" class=" btn btn-secondary " style="width:150px">Back</a>
+</div>
+*@

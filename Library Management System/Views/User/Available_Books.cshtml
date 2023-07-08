@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Book>
+<div class="border container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Available Books</h2>
+
+        </div>
+
+    </div>
+    <hr />
+    <table id="example" class="table table-bordered table-striped " style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Book Id
+                </th>
+                <th>
+                    Book Name
+                </th>
+                <th>
+                    Auther
+                </th>
+                <th>
+                    Faculty
+                </th>
+                <th>
+                    ISAvailable
+                </th>
+                <th>
+                    Request
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td width="10%">
+                        @obj.BookId
+                    </td>
+                    <td width="30%">
+                        @obj.BookName
+
+                    </td>
+                    <td width="30%">
+                        @obj.Auther
+
+                    </td>
+                    <td width="50%">
+                        @obj.BFaculty
+
+                    </td>
+
+
+                    @if (obj.NoOfBooks != 0)
+                    {
+                        <td width="30%">
+                            Yes
+                        </td>
+                    }
+                    else
+                    {
+                        <td width="30%">
+                            No
+                        </td>
+                    }
+
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            @if (@obj.NoOfBooks != 0)
+                            {
+
+                                <a asp-controller="User" asp-action="Request" asp-route-id="@obj.BookId" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Request</a>
+                            }
+                            else
+                            {
+                                <a  asp-controller="User" asp-action="Request" asp-route-id="@obj.BookId" class=" disabled btn btn-primary mx-2"><i  class="bi bi-pencil-square"></i>Request</a>
+
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-controller="User" asp-action="Button" class=" btn btn-secondary " style="width:150px">Back</a>
+</div>
