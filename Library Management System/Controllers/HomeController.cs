@@ -31,7 +31,13 @@ namespace Library_Management_System.Controllers
         {
             return View();
         }
+        public IActionResult User_Login_Page()
+        {
+          
+            return View();
 
+        }
+        [HttpPost]
         public IActionResult User_Login_Page(User user)
 		{
 			var status = _context.Users.Where(a => a.Username == user.Username && a.Password == user.Password).FirstOrDefault();
