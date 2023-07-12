@@ -7,10 +7,14 @@ namespace Library_Management_System.Models
 
         [Key]
         public int UserId { get; set; }
-        
-		public string Username { get; set; }
-       
-		public string Password { get; set; }
+        [Required]
+        [Display(Name = "User Name")]
+        public string Username { get; set; }
+        [Required]
+
+        [DataType(DataType.Password)]
+
+        public string Password { get; set; }
 	
 
 		[InverseProperty("User")]

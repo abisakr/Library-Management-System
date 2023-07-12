@@ -3,31 +3,36 @@ using Library_Management_System.Data;
 using Library_Management_System.DTO;
 using Library_Management_System.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library_Management_System.Controllers
 {
-    [Authorize]
+    // [Authorize]
     public class AdminController : Controller
     {
-		private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AdminController(ApplicationDbContext context,IMapper mapper)
+        public AdminController(ApplicationDbContext context, IMapper mapper, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
-			_context = context;
+            _context = context;
             _mapper = mapper;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
         public IActionResult Manage_Book()
         {
             IEnumerable<Book> objBooks = _context.Books;
 
-           
+
             return View(objBooks);
         }
         public IActionResult Add_Book()
         {
-            return View();  
+            return View();
         }
         [HttpPost]
         public IActionResult Add_Book(Book book)
@@ -35,12 +40,12 @@ namespace Library_Management_System.Controllers
 
 
 
-          
+
             if (!ModelState.IsValid)
             {
                 _context.Books.Add(book);
                 _context.SaveChanges();
-
+                TempData["success"] = "Book Added Successfully";
                 return RedirectToAction("Manage_Book", "Admin");
             }
             return View(book);
@@ -55,17 +60,18 @@ namespace Library_Management_System.Controllers
                 return NotFound();
 
             return View(book);
-           
+
         }
         [HttpPost]
         public IActionResult EditBook(Book book)
         {
-          
+
             if (!ModelState.IsValid)
             {
                 _context.Update(book);
                 _context.SaveChanges();
-                //TempData["success"] = "Category Edited Successfully";
+             
+                TempData["success"] = "Book Edited Successfully";
 
                 return RedirectToAction("Manage_Book");
             }
@@ -74,12 +80,12 @@ namespace Library_Management_System.Controllers
 
         public IActionResult Delete_Book(int? id)
         {
-           // if (id == null || id == 0)
-               // return NotFound();
+            // if (id == null || id == 0)
+            // return NotFound();
             var book = _context.Books.Find(id);
             if (book == null)
                 return NotFound();
-           
+
             return View(book);
 
         }
@@ -93,13 +99,14 @@ namespace Library_Management_System.Controllers
                 return NotFound();
             _context.Books.Remove(book1);
             _context.SaveChanges();
-                return RedirectToAction("Manage_Book");
+            TempData["success"] = "Book Deleted Successfully";
+            return RedirectToAction("Manage_Book");
 
 
         }
         public IActionResult Issue_Book()
         {
-           
+
             return View();
 
 
@@ -121,7 +128,7 @@ namespace Library_Management_System.Controllers
                 studentBook.Book = book;
                 _context.StudentBooks.Add(studentBook);
                 _context.SaveChanges();
-
+                TempData["success"] = "Book Issued Successfully";
 
                 return RedirectToAction("Button", "Home");
             }
@@ -157,14 +164,14 @@ namespace Library_Management_System.Controllers
 
                 var student = _context.Students.Where(x => x.StudentId == issue.StudentId).ToList().FirstOrDefault();
 
-               var studentBook = new StudentBook();
+                var studentBook = new StudentBook();
 
                 studentBook.Student = student;   //pahila foreign key wala data delete garna parxa ani balla primary data
                 studentBook.Book = book;
                 _context.StudentBooks.Remove(studentBook);
                 _context.SaveChanges();
 
-
+                TempData["success"] = "Book Returned Successfully";
                 return RedirectToAction("Button", "Home");
             }
             return View(issue);
@@ -173,7 +180,7 @@ namespace Library_Management_System.Controllers
 
         public IActionResult Manage_Students()
         {
-          
+
             IEnumerable<Student> stud = _context.Students;
             return View(stud);
 
@@ -191,7 +198,7 @@ namespace Library_Management_System.Controllers
             {
                 _context.Students.Add(std);
                 _context.SaveChanges();
-
+                TempData["success"] = "Student Added Successfully";
                 return RedirectToAction("Manage_Book", "Admin");
             }
             return View(std);
@@ -212,13 +219,14 @@ namespace Library_Management_System.Controllers
         public IActionResult Edit_Students(StudentDto student)
         {
             var mapper = _mapper.Map<Student>(student);
-            if (mapper.StudentId== null || mapper.StudentId == 0)
+            if (mapper.StudentId == null || mapper.StudentId == 0)
                 return NotFound();
             var student1 = _context.Students.Find(mapper.StudentId);
             if (mapper == null)
                 return NotFound();
             _context.Students.Remove(student1);
             _context.SaveChanges();
+            TempData["success"] = "Student Edited Successfully";
             return RedirectToAction("Manage_Students");
 
 
@@ -247,7 +255,7 @@ namespace Library_Management_System.Controllers
             IEnumerable<User> objUser = _context.Users;
 
 
-          
+
             return View(objUser);
 
         }
@@ -257,33 +265,61 @@ namespace Library_Management_System.Controllers
 
         }
         [HttpPost]
-        public IActionResult Add_User(UserDto user)
+		//original wala
+		//    public IActionResult Add_User(UserDto user)
+		//    {
+		//        var user1=_mapper.Map<User>(user);
+		//        var student = _mapper.Map<Student>(user);
+
+
+
+		//        if (ModelState.IsValid)
+		//        {
+
+		//            _context.Users.Add(user1);
+		//_context.SaveChanges();
+		//            var user2 = _context.Users.Find(user1.UserId);
+		//            student.User= user2;
+		//            _context.Students.Add(student);
+		//            _context.SaveChanges();
+
+
+
+		//            return RedirectToAction("Manage_User", "Admin");
+		//        }
+		//        return View(user1);
+
+		//    }
+		//identity wala
+		public async Task<IActionResult>Add_User(UserDto usr)
         {
-            var user1=_mapper.Map<User>(user);
-            var student = _mapper.Map<Student>(user);
+            var user1 = _mapper.Map<User>(usr);
+            var student = _mapper.Map<Student>(usr);
 
-            if (user.Password == null || user.Username == null)
+
+		
+			if (ModelState.IsValid)
             {
-                ModelState.AddModelError("user", "User and Password cant be empty !!");
+                var user = new IdentityUser { UserName = user1.Username };
+             var result= await _userManager.CreateAsync(user,user1.Password);
+
+                if (!result.Succeeded) {
+                await _signInManager.SignInAsync(user,isPersistent:false);
+                    TempData["success"] = "User Added Successfully";
+
+                    return RedirectToAction("Manage_User", "Admin");
+
+				}
+			
+              
+
+
+
             }
-
-
-            if (ModelState.IsValid)
-            {
-                _context.Users.Add(user1);
-				_context.SaveChanges();
-                var user2 = _context.Users.Find(user1.UserId);
-                student.User= user2;
-                _context.Students.Add(student);
-                _context.SaveChanges();
-
-
-
-                return RedirectToAction("Manage_User", "Admin");
-            }
-            return View(user1);
+            return View(usr);
 
         }
+
         public IActionResult Delete_User(int? id)
         {
             if (id == null || id == 0)
@@ -309,6 +345,8 @@ namespace Library_Management_System.Controllers
                 return NotFound();
             _context.Users.Remove(book1);
             _context.SaveChanges();
+            TempData["success"] = "User Deleted Successfully";
+
             return RedirectToAction("Manage_User");
 
         }
@@ -330,7 +368,8 @@ namespace Library_Management_System.Controllers
             {
                 _context.Update(user);
                 _context.SaveChanges();
-                //TempData["success"] = "Category Edited Successfully";
+                TempData["success"] = "User Edited Successfully";
+
 
                 return RedirectToAction("Manage_User");
             }

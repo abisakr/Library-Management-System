@@ -1,0 +1,101 @@
+﻿@model Admin
+<link href="~/css/User.css" rel="stylesheet" />
+<div class="row" style="margin-left:-91px">
+	<div class="col-md-6 mx-auto p-0">
+		<div class="card">
+			<div class="login-box">
+				<div class="login-snip">
+					<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Admin Login</label>
+					<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">User Login</label>
+					<div class="login-space">
+						<form method="post" asp-controller="Home" asp-action="Login" class="login">
+							<div class="group">
+								<label for="user" class="label">Username</label>
+								<input id="user" type="text" class="input" placeholder="Enter your username" asp-for="Username" autocomplete="off">
+								<span asp-validation-for="Username" class="text-danger"></span>
+							</div>
+							<div class="group">
+								<label for="pass" class="label">Password</label>
+								<input id="pass" type="password" class="input" data-type="password" placeholder="Enter your password" asp-for="Password">
+								<span asp-validation-for="Password" class="text-danger"></span>
+							</div>
+							<div class="group">
+								<input id="check" type="checkbox" class="check" checked>
+								<label for="check"><span class="icon"></span> Keep me Signed in</label>
+							</div>
+							<div class="group">
+								<button class="button" >Sign In</</button>
+							</div>
+							<div class="hr"></div>
+							<div class="foot">
+								<a href="#">Forgot Password?</a>
+							</div>
+						</form>
+						<form method="post" asp-controller="User" asp-action="Button" class="sign-up-form">
+							<div class="group">
+								<label for="user" class="label">Username</label>
+							
+								<input id="user" type="text" class="input" placeholder="Enter your username" asp-for="Username" autocomplete="off">
+						
+								<span asp-validation-for="Username" class="text-danger"></span>
+							</div>
+							<div class="group">
+								<label for="pass" class="label">Password</label>
+								<input id="pass" type="password" class="input" data-type="password" placeholder="Enter your password" asp-for="Password">
+								<span asp-validation-for="Password" class="text-danger"></span>
+							</div>
+							<div class="group">
+								<input id="check" type="checkbox" class="check" checked>
+								<label for="check"><span class="icon"></span> Keep me Signed in</label>
+							</div>
+							<div class="group">
+								<button class="button">Sign In</</button>
+							</div>
+							<div class="hr"></div>
+							<div class="foot">
+								<label for="tab-1">Forgot Password?</label>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@*
+
+<div class="limiter ">
+	<div class="container mx-auto  " style="background-image: url('c:\Users\ACER\OneDrive\Desktop\comed.jpg');
+">
+		<div class=" p-t-30 p-b-50">
+			<div class="text-center" style="color:black">
+				<span class="fs-1 login100-form-title p-b-1 ">Library Management System</span>
+				<center><h7 class="  p-b-49">Building Community,Inspiring readers,Expanding Book access !</h7></center>
+			</div>
+			<span class="text-center p-b-20 p-t-46">
+				Admin Login
+			</span>
+			<form method="post" asp-controller="Home" asp-action="Login" class=" p-b-33 p-t-5">
+
+				<div class="mx-auto ">
+					<input type="text" placeholder="Username" asp-for="Username" autocomplete="off">
+
+				</div>
+
+				<div class=" mx-auto">
+					<input type="password" asp-for="Password" placeholder="Password">
+
+				</div>
+				<p class="text-center small mt-3 mb-4 text-muted"><span class="fw-bold"><a class="text-muted " asp-controller="Home" asp-action="User_Login_Page">Login as User</a> / <a class="text-muted">Forgot Password</a>?</span></p>
+				<div class="container-login100-form-btn m-t-32">
+					<button class="login100-form-btn mx-auto">
+						Login
+
+					</button>
+				</div>
+
+			</form>
+		</div>
+	</div>
+</div>*@

@@ -1,8 +1,10 @@
 ﻿using Library_Management_System.Data;
 using Library_Management_System.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Runtime.Intrinsics.X86;
 
 namespace Library_Management_System.Controllers
 {
@@ -10,18 +12,25 @@ namespace Library_Management_System.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 		private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-		public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _logger = logger;
 			_context = context;
-		}
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
        
         public IActionResult Indexx()
         {
             return View();
         }
-       
+        public IActionResult privacy()
+        {
+            return View();
+        }
 
         public IActionResult User_Login_Page(User user)
 		{
@@ -39,32 +48,53 @@ namespace Library_Management_System.Controllers
 
 		}
 
-		public IActionResult Privacy()
+		
+     
+        public IActionResult Login()
         {
             return View();
         }
-        public IActionResult View_Books()
+     
+
+        [HttpPost]
+        public async Task<IActionResult> Login(Admin admin)
         {
-            return View();
-        }
-        public IActionResult Admin_Login()
-        {
-            return View();
+            //var status = _context.tbl_admin.Where(a => a.Username == admin.Username && a.Password == admin.Password).FirstOrDefault();
+            //if(status==null)
+            //{
+            //    ViewBag.LoginStatus = 0;
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Button", "Home");
+            //}
+
+            if (ModelState.IsValid)
+            {
+              
+                var result = await _signInManager.PasswordSignInAsync(admin.Username, admin.Password,true,false);  
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Button", "Home");
+
+                }
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+
+
+
+
+            }
+            return View(admin);
         }
         [HttpPost]
-        public IActionResult Admin_Login(Admin admin)
+
+       
+        public async Task<IActionResult> LogOut()
         {
-            var status = _context.tbl_admin.Where(a => a.Username == admin.Username && a.Password == admin.Password).FirstOrDefault();
-            if(status==null)
-            {
-                ViewBag.LoginStatus = 0;
-            }
-            else
-            {
-                return RedirectToAction("Button", "Home");
-            }
-           
-            return View(admin);
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Login", "Home");
         }
         //[Authorize]
         public IActionResult Button()

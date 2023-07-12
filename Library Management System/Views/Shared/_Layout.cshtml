@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<IdentityUser> sigInManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,76 +10,84 @@
     <link rel="stylesheet" href="~/Library_Management_System.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
     <link rel="stylesheet" href=" https: //cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css" />
-   @* <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="css/util.css">
-<link rel="stylesheet" type="text/css" href="css/main.css">
-*@
 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+   
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+
+    <link href="~/css/layout.css" rel="stylesheet" />
    
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Indexx">Library_Management_System</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+ 
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <!-- Container wrapper -->
+            <div class="container">
+                <!-- Navbar brand -->
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Indexx">
+                    <img id="MDB-logo"
+                         src="https://cdn4.iconfinder.com/data/icons/knowledge-8/64/book-knowledge-library-reading-education-512.png" alt="MDB Logo"
+                         draggable="false" height="60" />
+                </a>
+
+                <!-- Toggle button -->
+                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Indexx">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                       
-                        </ul>
 
-                      @*  
-                        <a class="nav-link dropdown-toggle d-flex align-items-center"
-                           href="#"
-                           id="navbarDropdownMenuLink"
-                           role="button"
-                           data-mdb-toggle="dropdown"
-                           aria-expanded="false">
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg"
-                                 class="rounded-circle"
-                                 height="30"
-                                 alt=""
-                                 loading="lazy" />
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">My profile</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
-                        </ul>*@
-                    <ul class="navbar-nav mr-auto">
+                <!-- Collapsible wrapper -->
+                <div class=" navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarSupportedContent  ">
+                    <!-- Left links -->
+                    <ul class="navbar-nav flex-grow-1 me-3">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="View_Books">View Books</a>
+                            <a class="nav-link active d-flex align-items-center" aria-current="page" asp-controller="Home" asp-action="Indexx">
+                                <i class="fas fa-bars pe-2"></i>Home
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Admin_Login">Login</a>
+                            <a class="nav-link active d-flex align-items-center" aria-current="page" asp-controller="Home" asp-action="Privacy">
+                                <i class="fas fa-bars pe-2"></i>Privacy
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privac">Hello admin</a>
-                        </li>
-                       
                     </ul>
+                    <!-- Left links -->
 
-                
+                   
+
+                    <ul class="navbar-nav ms-3 mr-auto">
+                      @*  @if (sigInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item " style="width: 65px;">
+                                <form method="post" asp-controller="Home" asp-action="LogOut">
+                                    <button type="submit">Log Out @User.Identity.Name</button>
+                                </form>
+                              <a class="nav-link text-dark" asp-controller="Home" asp-action="LogOut">LogOut</a>
+                            </li>
+                        }*@
+                        <li class="nav-item" style="width: 65px">
+                            <a class="nav-link d-flex align-items-center" asp-controller="Home" asp-action="Login">Login</a>
+                        </li>
+                    </ul>
                 </div>
+                <!-- Collapsible wrapper -->
             </div>
+            <!-- Container wrapper -->
         </nav>
+        <!-- Navbar -->
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <partial name="_Notification" />
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class=" footer text-muted">
         <div class="container text-center">
             &copy; 2023 - Library_Management_System - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
@@ -89,6 +98,11 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+
+   
+
+
+
     <script src="~/js/app.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

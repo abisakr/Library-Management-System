@@ -1,6 +1,36 @@
-﻿<link href="~/css/demo.css" rel="stylesheet" />
+﻿
 @model User
-<div class="limiter ">
+
+<div class="limiter">
+	<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+		<div class="wrap-login100 p-t-30 p-b-50">
+			<span class="login100-form-title p-b-41">
+				Account Login
+			</span>
+			<form class="login100-form validate-form p-b-33 p-t-5">
+
+				<div class="wrap-input100 validate-input" data-validate="Enter username">
+					<input class="input100" type="text" name="username" placeholder="User name">
+					<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+				</div>
+
+				<div class="wrap-input100 validate-input" data-validate="Enter password">
+					<input class="input100" type="password" name="pass" placeholder="Password">
+					<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+				</div>
+
+				<div class="container-login100-form-btn m-t-32">
+					<button class="login100-form-btn">
+						Login
+					</button>
+				</div>
+
+			</form>
+		</div>
+	</div>
+</div>
+
+@*<div class="limiter ">
 	<div class="container mx-auto  " style="background-image: url('c:\Users\ACER\OneDrive\Desktop\comed.jpg');
 ">
 		<div class=" p-t-30 p-b-50">
@@ -12,7 +42,7 @@
 				User Login
 			</span>
 			<form method="post" asp-controller="Home" asp-action="User_Login_Page" class=" p-b-33 p-t-5">
-			
+
 				<div class="mx-auto ">
 					<input type="text" placeholder="Username" asp-for="Username" autocomplete="off">
 					<span asp-validation-for="Username" class="text-danger"></span>
@@ -23,11 +53,11 @@
 					<span asp-validation-for="Password" class="text-danger"></span>
 
 				</div>
-				<p class="text-center small mt-3 mb-4 text-muted"><span class="fw-bold"><a class="text-muted " asp-controller="Home" asp-action="Admin_Login">Login as Admin</a> / <a class="text-muted">Forgot Password</a>?</span></p>
+				<p class="text-center small mt-3 mb-4 text-muted"><span class="fw-bold"><a class="text-muted " asp-controller="Home" asp-action="Login">Login as Admin</a> / <a class="text-muted">Forgot Password</a>?</span></p>
 				<div class="container-login100-form-btn m-t-32">
 					<button class="login100-form-btn mx-auto">
 						Login
-					
+
 					</button>
 				</div>
 
@@ -35,69 +65,4 @@
 		</div>
 	</div>
 </div>
-
-
-
-@*
-next
-<div class="section">
-	<div class="container">
-		<div class="text-center" style="color:white">
-			<span class="fs-1 login100-form-title p-b-1 ">Library Management System</span>
-			<center><h7 class="  p-b-49">Building Community,Inspiring readers,Expanding Book access !</h7></center>
-		</div>
-		<div class="row full-height justify-content-center">
-			<div class="col-12 text-center align-self-center py-5">
-				<div class="section pb-5 pt-5 pt-sm-2 text-center">
-					<h6 class="mb-0 pb-3"><span>Admin LogIn </span><span>User Login</span></h6>
-					<input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
-					<label for="reg-log"></label>
-					<div class="card-3d-wrap mx-auto ">
-						<div class="card-3d-wrapper">
-							<div class="card-front">
-								<form method="post" asp-controller="Home" asp-action="User_Login_Page" class="center-wrap">
-									<div class="section text-center">
-										<h4 class="mb-4 pb-3"> Admin Log In</h4>
-										<div class="form-group">
-											<input type="text" name="logemail" class="form-style" placeholder=" Your User Name" id="logemail" autocomplete="off">
-											<i class="input-icon uil uil-at"></i>
-										</div>
-										<div class="form-group mt-2">
-											<input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
-											<i class="input-icon uil uil-lock-alt"></i>
-										</div>
-										
-										<div class="container-login100-form-btn m-t-32">
-											<button class="btn mt-4">
-												Login
-
-											</button>
-										</div>
-										<p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
-									</div>
-								</form>
-							</div>
-							<div class="card-back">
-								<div class="center-wrap">
-									<div class="section text-center">
-										<h4 class="mb-4 pb-3"> User Log In</h4>
-										<div class="form-group">
-											<input type="text" name="logemail" class="form-style" placeholder=" Your User Name" id="logemail" autocomplete="off">
-											<i class="input-icon uil uil-at"></i>
-										</div>
-										<div class="form-group mt-2">
-											<input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
-											<i class="input-icon uil uil-lock-alt"></i>
-										</div>
-										<a href="#" class="btn mt-4">Login</a>
-										<p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>*@
+*@
