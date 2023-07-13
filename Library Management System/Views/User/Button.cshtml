@@ -1,18 +1,33 @@
 ﻿
+<link href="~/css/HomeButton.css" rel="stylesheet" />
 
 
-<center><h1 class="display-4"> User Pannel  </h1></center>
-<div class="m-3 p-4">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <button>
+<div id="header">
 
-        <a class="m-3 p-4" asp-controller="User" asp-action="Available_Books">Available Books</a>
-    </button>
-   
-    <button>
-        <a class="m-3 p-4" asp-controller="User" asp-action="My_Books">My Books</a>
-    </button>
-   
+    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Indexx">
+        <img id="MDB-logo"
+             src="https://cdn4.iconfinder.com/data/icons/knowledge-8/64/book-knowledge-library-reading-education-512.png" alt="MDB Logo"
+             draggable="false" height="60" />
+    </a>
 
+    <div id="inside">
+        <h1>User Pannel</h1>
+    </div>
+
+    <a asp-controller="Home" asp-action="LogOut" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
 </div>
 
+<div id="menu">
+    <ul>
+        <li><a asp-controller="User" asp-action="Available_Books"><i class="fas fa-book"></i> Available Books</a></li>
+        <li><a asp-controller="User" asp-action="My_Books"><i class="fas fa-chart-bar"></i>My Books</a></li>
+
+    </ul>
+ 
+</div>
+
+<div id="content">
+    <!-- Content area -->
+</div>

@@ -70,7 +70,7 @@ namespace Library_Management_System.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-           // var users = _context.tbl_admin.ToList();
+           
             return View();
         }
 

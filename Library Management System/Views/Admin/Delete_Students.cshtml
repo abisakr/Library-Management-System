@@ -1,4 +1,7 @@
-﻿@model Student
+﻿@{
+    Layout = "Layout1";
+}
+@model Student
 <form method="post" asp-controller="Admin" asp-action="DeleteBook">
     <input asp-for="StudentId" hidden />
     <div class="border p-3 mt-4">

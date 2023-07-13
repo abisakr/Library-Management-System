@@ -1,7 +1,10 @@
-﻿@using Library_Management_System.Models
+﻿
+@using Library_Management_System.Models
 
 @model Library_Management_System.DTO.IssueBookDto
-
+@{
+    Layout = "Layout1";
+}
 <form method="post">
     
     <div class="border p-3 mt-4">
@@ -22,11 +25,7 @@
                 <span asp-validation-for="StudentId" class="text-danger"></span>
 
             </div>
-           @* <div class=" col mb-3">
-                <label asp-for="IssueDate"></label>
-                <input type="datetime" asp-for="IssueDate" class="form-control" />
-                <span asp-validation-for="IssueDate" class="text-danger"></span>
-            </div>*@
+         
         </div>
         <button class=" btn btn-primary " type="submit" style="width:150px">Return</button>
         <a asp-controller="Home" asp-action="Button" class=" btn btn-secondary " style="width:150px">Back</a>

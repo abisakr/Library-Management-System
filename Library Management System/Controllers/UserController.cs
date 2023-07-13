@@ -47,7 +47,7 @@ namespace Library_Management_System.Controllers
             var userId = Convert.ToInt32(user);
 
             var books=_context.StudentBooks.Include(a=>a.Book).Where(a=>a.StudentId== userId).ToList();
-            //IEnumerable<Book> objBooks = _context.Books;
+         
 
 
             return View(books);

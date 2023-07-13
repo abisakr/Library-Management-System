@@ -1,6 +1,10 @@
 ﻿@using Library_Management_System.DTO;
-@model StudentDto
-<form method="post" asp-controller="Admin" asp-action="EditUser">
+@{
+    Layout = "Layout1";
+}
+
+@model  StudentDto
+<form method="post" asp-controller="Admin" asp-action="Edit_Students">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary">Edit Student</h2>

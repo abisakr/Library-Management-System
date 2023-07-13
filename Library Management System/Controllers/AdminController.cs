@@ -81,8 +81,7 @@ namespace Library_Management_System.Controllers
 
         public IActionResult Delete_Book(int? id)
         {
-            // if (id == null || id == 0)
-            // return NotFound();
+            
             var book = _context.Books.Find(id);
             if (book == null)
                 return NotFound();
@@ -176,25 +175,25 @@ namespace Library_Management_System.Controllers
             return View(stud);
 
         }
-        public IActionResult Add_Student()
-        {
-            return View();
+        //public IActionResult Add_Student()
+        //{
+        //    return View();
 
 
-        }
-        [HttpPost]
-        public IActionResult Add_Student(Student std)
-        {
-            if (!ModelState.IsValid)
-            {
-                _context.Students.Add(std);
-                _context.SaveChanges();
-                TempData["success"] = "Student Added Successfully";
-                return RedirectToAction("Manage_Book", "Admin");
-            }
-            return View(std);
+        //}
+        //[HttpPost]
+        //public IActionResult Add_Student(Student std)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        _context.Students.Add(std);
+        //        _context.SaveChanges();
+        //        TempData["success"] = "Student Added Successfully";
+        //        return RedirectToAction("Manage_Book", "Admin");
+        //    }
+        //    return View(std);
 
-        }
+        //}
         public IActionResult Edit_Students(int? id)
         {
             if (id == null || id == 0)
@@ -206,6 +205,22 @@ namespace Library_Management_System.Controllers
             return View(student);
 
         }
+        //[HttpPost]
+        //public IActionResult Edit_Students(Student student)
+        //{
+
+        //    if (!ModelState.IsValid)
+        //    {
+        //        _context.Update(student);
+        //        _context.SaveChanges();
+
+        //        TempData["success"] = "Book Edited Successfully";
+
+        //        return RedirectToAction("Manage_Students");
+        //    }
+        //    return NotFound();
+        //}
+
         [HttpPost]
         public IActionResult Edit_Students(StudentDto student)
         {
@@ -215,7 +230,7 @@ namespace Library_Management_System.Controllers
             var student1 = _context.Students.Find(mapper.StudentId);
             if (mapper == null)
                 return NotFound();
-            _context.Students.Remove(student1);
+            _context.Update(student1);
             _context.SaveChanges();
             TempData["success"] = "Student Edited Successfully";
             return RedirectToAction("Manage_Students");
@@ -224,14 +239,14 @@ namespace Library_Management_System.Controllers
         }
 
 
-        public IActionResult View_Students()
-        {
-            IEnumerable<Models.StudentBook> studentBooks = _context.StudentBooks;
-            var issueBookDtos = _mapper.Map<IEnumerable<Models.StudentBook>, IEnumerable<IssueBookDto>>(studentBooks);
+        //public IActionResult View_Students()
+        //{
+        //    IEnumerable<Models.StudentBook> studentBooks = _context.StudentBooks;
+        //    var issueBookDtos = _mapper.Map<IEnumerable<Models.StudentBook>, IEnumerable<IssueBookDto>>(studentBooks);
 
-            return View(issueBookDtos);
+        //    return View(issueBookDtos);
 
-        }
+        //}
         public IActionResult Issue_Request()
         {
             IEnumerable<Book> objUser = _context.Books;
@@ -292,34 +307,7 @@ namespace Library_Management_System.Controllers
 
         }
       
-        //     public async Task<IActionResult>Add_User(UserDto usr)
-        //     {
-        //         var user1 = _mapper.Map<User>(usr);
-        //         var student = _mapper.Map<Student>(usr);
-
-
-
-        //if (ModelState.IsValid)
-        //         {
-        //             var user = new IdentityUser { UserName = user1.Username };
-        //          var result= await _userManager.CreateAsync(user,user1.Password);
-
-        //             if (!result.Succeeded) {
-        //             await _signInManager.SignInAsync(user,isPersistent:false);
-        //                 TempData["success"] = "User Added Successfully";
-
-        //                 return RedirectToAction("Manage_User", "Admin");
-
-        //	}
-
-
-
-
-
-        //         }
-        //         return View(usr);
-
-        //}
+     
 
         public IActionResult Delete_User(int? id)
         {
