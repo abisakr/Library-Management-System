@@ -121,6 +121,7 @@ namespace Library_Management_System.Controllers
 
                 var book = _context.Books.Where(x => x.BookId == issue.BookId).ToList().FirstOrDefault();
 
+
                 var student = _context.Students.Where(x => x.StudentId == issue.StudentId).ToList().FirstOrDefault();
 
                 var studentBook = new Models.StudentBook();
@@ -129,6 +130,11 @@ namespace Library_Management_System.Controllers
                 studentBook.Book = book;
                 _context.StudentBooks.Add(studentBook);
                 _context.SaveChanges();
+                var book1 = _context.Books.Where(x => x.BookId == issue.BookId).ToList().FirstOrDefault();
+                book1.NoOfBooks--;
+                _context.Update(book1);
+                _context.SaveChanges();
+
                 TempData["success"] = "Book Issued Successfully";
 
                 return RedirectToAction("Button", "Home");
@@ -147,36 +153,15 @@ namespace Library_Management_System.Controllers
             if (ModelState.IsValid)
             {
 
-                //  StudentBook  Issue = _mapper.Map < IssueBookDto, Student > (issue) ;
-                //var mapper = _mapper.Map<Student>(issue);
-                //var mapper1 = _mapper.Map<Book>(issue);
-
-
-
-                //_context.Students.Add(mapper);
-
-
-
-                //_context.SaveChanges();
-                //_context.Books.Add(mapper1);
-                //_context.SaveChanges();
-
-                //var book = _context.Books.Where(x => x.BookId == issue.BookId).FirstOrDefault();
-
-                //var student = _context.Students.Where(x => x.StudentId == issue.StudentId).FirstOrDefault();
-
-                //var studentBook = new Models.StudentBook();
-
-                //studentBook.Student = student;   //pahila foreign key wala data delete garna parxa ani balla primary data
-                //studentBook.Book = book;
-                //_context.StudentBooks.Remove(studentBook);
-                //_context.SaveChanges();
+               
                 StudentBook students = _context.StudentBooks.Where(a=>a.StudentId==issue.StudentId && a.BookId==issue.BookId).ToList().FirstOrDefault();
-                //StudentBook book = _context.StudentBooks.Find(issue.BookId);
+               
                 _context.StudentBooks.Remove(students);
                 _context.SaveChanges();
-                
-
+                var book1 = _context.Books.Where(x => x.BookId == issue.BookId).ToList().FirstOrDefault();
+                book1.NoOfBooks++;
+                _context.Update(book1);
+                _context.SaveChanges();
                 TempData["success"] = "Book Returned Successfully";
                 return RedirectToAction("Button", "Home");
             }

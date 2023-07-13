@@ -34,13 +34,18 @@ namespace Library_Management_System.Controllers
         }
         public IActionResult User_Login_Page()
         {
-
-            return View();
+            var user1 = Request.Cookies["User"];
+            if (user1 == null)
+            {
+                return View();
+            }
+            return RedirectToAction("Button","User");
 
         }
         [HttpPost]
         public IActionResult User_Login_Page(User user)
         {
+           
             var status = _context.Users.Include(a => a.Student).FirstOrDefault(a => a.Username == user.Username && a.Password == user.Password);
             if (status == null)
             {
