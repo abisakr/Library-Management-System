@@ -1,0 +1,59 @@
+﻿
+
+@model IEnumerable<StudentBook>
+
+<div class="border container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Books Taken</h2>
+
+        </div>
+
+    </div>
+    <hr />
+
+
+
+    <table id="example" class="table table-bordered table-striped " style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Student Id
+                </th>
+                <th>
+                    Student Name
+                </th>
+               
+                <th>
+                    Books Taken
+                </th>
+
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td width="10%">
+                        @obj.StudentId
+                    </td>
+                    <td width="30%">
+                        @obj.Student.StudentName
+
+                    </td>
+                   
+                    <td width="50%">
+                        @obj.Book.BookName
+
+                    </td>
+
+                    
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-controller="Home" asp-action="Button" class=" btn btn-secondary " style="width:150px">Back</a>
+</div>
+

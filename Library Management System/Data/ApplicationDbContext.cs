@@ -17,5 +17,17 @@ namespace Library_Management_System.Data
 
         public DbSet<Admin>tbl_admin { get; set; }
 
-	}
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    Configure many-to - many relationship
+        //            modelBuilder.Entity<MainEntity>()
+        //        .HasMany(e => e.JoinEntities)
+        //        .WithRequired(e => e.MainEntity)
+        //        .HasForeignKey(e => e.MainEntityId)
+        //        .WillCascadeOnDelete(false); // Prevents cascade deletion
+
+        //    base.OnModelCreating(modelBuilder);
+        //}
+
+    }
 }

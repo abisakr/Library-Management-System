@@ -3,6 +3,7 @@ using Library_Management_System.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Runtime.Intrinsics.X86;
 
@@ -11,18 +12,18 @@ namespace Library_Management_System.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-		private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _logger = logger;
-			_context = context;
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
         }
-       
+
         public IActionResult Indexx()
         {
             return View();
@@ -33,76 +34,86 @@ namespace Library_Management_System.Controllers
         }
         public IActionResult User_Login_Page()
         {
-          
+
             return View();
 
         }
         [HttpPost]
         public IActionResult User_Login_Page(User user)
-		{
-			var status = _context.Users.Where(a => a.Username == user.Username && a.Password == user.Password).FirstOrDefault();
-			if (status == null)
-			{
-				ViewBag.LoginStatus = 0;
-			}
-			else
-			{
-				return RedirectToAction("Button", "User");
-			}
+        {
+            var status = _context.Users.Include(a => a.Student).FirstOrDefault(a => a.Username == user.Username && a.Password == user.Password);
+            if (status == null)
+            {
+                ViewBag.LoginStatus = 0;
+            }
+            else
+            {
+                var cookieOptions = new CookieOptions();
 
-			return View(user);
+                cookieOptions.Expires = DateTime.Now.AddDays(30);
+                cookieOptions.Path = "/";
+                Response.Cookies.Append("User",Convert.ToString(status.Student.StudentId), cookieOptions);
 
-		}
+                return RedirectToAction("Button", "User");
+            }
 
-		
-     
+            return View(user);
+
+        }
+
+
+        [HttpGet]
         public IActionResult Login()
         {
+           // var users = _context.tbl_admin.ToList();
             return View();
         }
-     
 
+    
         [HttpPost]
-        public async Task<IActionResult> Login(Admin admin)
+        public IActionResult Login(Admin admin)
         {
-            //var status = _context.tbl_admin.Where(a => a.Username == admin.Username && a.Password == admin.Password).FirstOrDefault();
-            //if(status==null)
-            //{
-            //    ViewBag.LoginStatus = 0;
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Button", "Home");
-            //}
-
-            if (ModelState.IsValid)
+            var status = _context.tbl_admin.Where(a => a.Username == admin.Username && a.Password == admin.Password).FirstOrDefault();
+            if (status == null)
             {
-              
-                var result = await _signInManager.PasswordSignInAsync(admin.Username, admin.Password,true,false);  
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Button", "Home");
-
-                }
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-
-
-
-
+                ViewBag.LoginStatus = 0;
+                return View(admin);
             }
-            return View(admin);
-        }
-        [HttpPost]
+            else
+            {
+                return RedirectToAction("Button", "Home");
+            }
 
-       
-        public async Task<IActionResult> LogOut()
+
+        }
+
+
+
+
+        public IActionResult LogOut()
+
         {
-            await _signInManager.SignOutAsync();
+            //CookieOptions.Expires = DateTime.Now.AddSeconds(1);
+            // Session.Abandon();
+            //HttpContext.Current.Session.Abandon();
+            //string v = Request.Cookies["UserId"];
+            var cookieOptions = new CookieOptions();
+            cookieOptions.Expires = DateTime.Now.AddDays(-1d);
 
-            return RedirectToAction("Login", "Home");
+
+            Response.Cookies.Append("User", "null", cookieOptions);
+            //var cookieOptions1 = new CookieOptions();
+            //cookieOptions1.Expires = DateTime.Now.AddDays(-1d);
+
+            //  Response.Cookies.Append("SomeCookie", "null", cookieOptions);
+            //  var UserId = Int32.Parse(Request.Cookies["UserId"]);
+
+            return RedirectToAction(actionName: "Indexx", controllerName: "Home");
+
+
         }
-        //[Authorize]
+
+
         public IActionResult Button()
         {
 

@@ -13,7 +13,9 @@ namespace Library_Management_System.Helper
 
             CreateMap<User, UserDto>().ReverseMap();
 
-            CreateMap<UserDto,Student>().ReverseMap();  
+            CreateMap<UserDto,Student>().ReverseMap();
+           
+
 
 
             //for student and book

@@ -3,10 +3,11 @@ using Library_Management_System.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace Library_Management_System.Controllers
 {
-    [Authorize]
+
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -38,10 +39,18 @@ namespace Library_Management_System.Controllers
         }
         public IActionResult My_Books()
         {
-            IEnumerable<Book> objBooks = _context.Books;
+            var user = Request.Cookies["User"];
+            if (user == null)
+            {
+                return RedirectToAction("Index","Home");
+            }
+            var userId = Convert.ToInt32(user);
+
+            var books=_context.StudentBooks.Include(a=>a.Book).Where(a=>a.StudentId== userId).ToList();
+            //IEnumerable<Book> objBooks = _context.Books;
 
 
-            return View(objBooks);
+            return View(books);
         }
     }
 }

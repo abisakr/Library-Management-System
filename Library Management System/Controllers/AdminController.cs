@@ -5,10 +5,11 @@ using Library_Management_System.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library_Management_System.Controllers
 {
-    // [Authorize]
+   
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -45,7 +46,7 @@ namespace Library_Management_System.Controllers
             {
                 _context.Books.Add(book);
                 _context.SaveChanges();
-                TempData["success"] = "Book Added Successfully";
+                TempData["Sucess"] = "Book Added Sucessfully";
                 return RedirectToAction("Manage_Book", "Admin");
             }
             return View(book);
@@ -99,7 +100,7 @@ namespace Library_Management_System.Controllers
                 return NotFound();
             _context.Books.Remove(book1);
             _context.SaveChanges();
-            TempData["success"] = "Book Deleted Successfully";
+            TempData["sucess"] = "Book Deleted Sucessfully";
             return RedirectToAction("Manage_Book");
 
 
@@ -122,7 +123,7 @@ namespace Library_Management_System.Controllers
 
                 var student = _context.Students.Where(x => x.StudentId == issue.StudentId).ToList().FirstOrDefault();
 
-                var studentBook = new StudentBook();
+                var studentBook = new Models.StudentBook();
 
                 studentBook.Student = student;
                 studentBook.Book = book;
@@ -160,16 +161,21 @@ namespace Library_Management_System.Controllers
                 //_context.Books.Add(mapper1);
                 //_context.SaveChanges();
 
-                var book = _context.Books.Where(x => x.BookId == issue.BookId).ToList().FirstOrDefault();
+                //var book = _context.Books.Where(x => x.BookId == issue.BookId).FirstOrDefault();
 
-                var student = _context.Students.Where(x => x.StudentId == issue.StudentId).ToList().FirstOrDefault();
+                //var student = _context.Students.Where(x => x.StudentId == issue.StudentId).FirstOrDefault();
 
-                var studentBook = new StudentBook();
+                //var studentBook = new Models.StudentBook();
 
-                studentBook.Student = student;   //pahila foreign key wala data delete garna parxa ani balla primary data
-                studentBook.Book = book;
-                _context.StudentBooks.Remove(studentBook);
+                //studentBook.Student = student;   //pahila foreign key wala data delete garna parxa ani balla primary data
+                //studentBook.Book = book;
+                //_context.StudentBooks.Remove(studentBook);
+                //_context.SaveChanges();
+                StudentBook students = _context.StudentBooks.Where(a=>a.StudentId==issue.StudentId && a.BookId==issue.BookId).ToList().FirstOrDefault();
+                //StudentBook book = _context.StudentBooks.Find(issue.BookId);
+                _context.StudentBooks.Remove(students);
                 _context.SaveChanges();
+                
 
                 TempData["success"] = "Book Returned Successfully";
                 return RedirectToAction("Button", "Home");
@@ -235,8 +241,8 @@ namespace Library_Management_System.Controllers
 
         public IActionResult View_Students()
         {
-            IEnumerable<StudentBook> studentBooks = _context.StudentBooks;
-            var issueBookDtos = _mapper.Map<IEnumerable<StudentBook>, IEnumerable<IssueBookDto>>(studentBooks);
+            IEnumerable<Models.StudentBook> studentBooks = _context.StudentBooks;
+            var issueBookDtos = _mapper.Map<IEnumerable<Models.StudentBook>, IEnumerable<IssueBookDto>>(studentBooks);
 
             return View(issueBookDtos);
 
@@ -265,60 +271,70 @@ namespace Library_Management_System.Controllers
 
         }
         [HttpPost]
-		//original wala
-		//    public IActionResult Add_User(UserDto user)
-		//    {
-		//        var user1=_mapper.Map<User>(user);
-		//        var student = _mapper.Map<Student>(user);
 
-
-
-		//        if (ModelState.IsValid)
-		//        {
-
-		//            _context.Users.Add(user1);
-		//_context.SaveChanges();
-		//            var user2 = _context.Users.Find(user1.UserId);
-		//            student.User= user2;
-		//            _context.Students.Add(student);
-		//            _context.SaveChanges();
-
-
-
-		//            return RedirectToAction("Manage_User", "Admin");
-		//        }
-		//        return View(user1);
-
-		//    }
-		//identity wala
-		public async Task<IActionResult>Add_User(UserDto usr)
+        public IActionResult Add_User(UserDto user)
         {
-            var user1 = _mapper.Map<User>(usr);
-            var student = _mapper.Map<Student>(usr);
+            var user1 = _mapper.Map<User>(user);
+            var student = _mapper.Map<Student>(user);
 
 
-		
-			if (ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = user1.Username };
-             var result= await _userManager.CreateAsync(user,user1.Password);
 
-                if (!result.Succeeded) {
-                await _signInManager.SignInAsync(user,isPersistent:false);
-                    TempData["success"] = "User Added Successfully";
-
-                    return RedirectToAction("Manage_User", "Admin");
-
-				}
-			
-              
+                _context.Users.Add(user1);
+                _context.SaveChanges();
+                var user2 = _context.Users.Find(user1.UserId);
+                student.User = user2;
+                _context.Students.Add(student);
+                _context.SaveChanges();
 
 
 
+                return RedirectToAction("Manage_User", "Admin");
             }
-            return View(usr);
+            return View(user1);
 
         }
+
+        public IActionResult Books_Taken( )
+        {
+            IEnumerable<StudentBook> objUser = _context.StudentBooks.Include(a => a.Book)
+                .Include(a => a.Student);
+               
+
+            return View(objUser);
+
+        }
+      
+        //     public async Task<IActionResult>Add_User(UserDto usr)
+        //     {
+        //         var user1 = _mapper.Map<User>(usr);
+        //         var student = _mapper.Map<Student>(usr);
+
+
+
+        //if (ModelState.IsValid)
+        //         {
+        //             var user = new IdentityUser { UserName = user1.Username };
+        //          var result= await _userManager.CreateAsync(user,user1.Password);
+
+        //             if (!result.Succeeded) {
+        //             await _signInManager.SignInAsync(user,isPersistent:false);
+        //                 TempData["success"] = "User Added Successfully";
+
+        //                 return RedirectToAction("Manage_User", "Admin");
+
+        //	}
+
+
+
+
+
+        //         }
+        //         return View(usr);
+
+        //}
 
         public IActionResult Delete_User(int? id)
         {
@@ -377,125 +393,6 @@ namespace Library_Management_System.Controllers
         }
     }
 }
-
-
-
-
-//from another
-//namespace BulkyBookWeb.Controllers
-//{
-//	public class CategoryController : Controller
-//	{
-//		private readonly ApplicationDbContext _db;
-//		//   [ActivatorUtilitiesConstructor]
-//		public CategoryController(ApplicationDbContext db)
-//		{
-//			_db = db;
-//		}
-//		public IActionResult Index()
-//		{
-//			IEnumerable<Category> objCategoryList = _db.Categories;
-
-//			return View(objCategoryList);
-//		}
-//		//GET action method
-//		public IActionResult Create()
-//		{
-//			return View();
-//		}
-//		//POST 
-//		[HttpPost]
-//		[ValidateAntiForgeryToken]//helps from csx attack
-//		public IActionResult Create(Category obj)
-//		{
-//			if (obj.Name == obj.DisplayOrder.ToString())
-//			{
-//				ModelState.AddModelError("name", "The Display Order Cannot Exactly Match The Name");
-//			}
-//			if (ModelState.IsValid)
-//			{
-//				_db.Categories.Add(obj);
-//				_db.SaveChanges();
-//				TempData["success"] = "Category Created Successfully";
-//				return RedirectToAction("Index");
-//			}
-//			return View(obj);
-//		}
-//		//GET action method
-//		public IActionResult Edit(int? id)
-//		{
-//			if (id == null || id == 0)
-//			{
-//				return NotFound();
-//			}
-//			var categoryFromDb = _db.Categories.Find(id);
-//			if (categoryFromDb == null)
-//			{
-//				return NotFound();
-
-//			}
-//			return View(categoryFromDb);
-//		}
-//		//  POST 
-//		[HttpPost]
-//		[ValidateAntiForgeryToken]//helps from csx attack
-//								  //   [ValidateAntiForgeryToken,HttpPost] this can also be written in one line 
-//		public IActionResult Edit(Category obj)
-//		{
-//			if (obj.Name == obj.DisplayOrder.ToString())
-//			{
-//				ModelState.AddModelError("name", "The Display Order Cannot Exactly Match The Name");
-//			}
-//			if (ModelState.IsValid)
-//			{
-//				_db.Categories.Update(obj);
-//				_db.SaveChanges();
-//				TempData["success"] = "Category Edited Successfully";
-
-//				return RedirectToAction("Index");
-//			}
-//			return View(obj);
-//		}
-//		//GET action method for delete
-//		public IActionResult Delete(int? id)
-//		{
-//			if (id == null || id == 0)
-//			{
-//				return NotFound();
-//			}
-//			var categoryFromDb = _db.Categories.Find(id);
-//			if (categoryFromDb == null)
-//			{
-//				return NotFound();
-
-//			}
-//			return View(categoryFromDb);
-//		}
-//		//  POST 
-
-//		[ValidateAntiForgeryToken, HttpPost, ActionName("DeletePost")]//helps from csx attack
-//		public IActionResult DeletePost(int? id)
-//		{
-//			var obj = _db.Categories.Find(id);
-//			if (obj == null)
-//			{
-//				return NotFound();
-//			}
-//			_db.Categories.Remove(obj);
-//			_db.SaveChanges();
-//			TempData["success"] = "Category Deleted Successfully";
-
-//			return RedirectToAction("Index");
-
-//		}
-//	}
-//}
-
-
-
-
-
-
 
 
 
