@@ -2,6 +2,7 @@
 @{
     Layout = "Layout1";
 }
+<link href="~/css/BoostrapTheme.css" rel="stylesheet" />
 
 @model  StudentDto
 <form method="post" asp-controller="Admin" asp-action="Edit_Students">
@@ -13,13 +14,13 @@
 
         <div class=" row mb-3">
             <div class=" col mb-3">
-                <label asp-for="StudentId"></label>
-                <input  asp-for="StudentId" class="form-control" />
+                <label asp-for="StudentId"></label> 
+                <input asp-for="StudentId" class="form-control rounded-4" />
                 <span asp-validation-for="StudentId" class="text-danger"></span>
             </div>
             <div class=" col mb-3">
                 <label asp-for="StudentName"></label>
-                <input asp-for="StudentName" class="form-control" />
+                <input asp-for="StudentName" class="form-control rounded-4" />
                 <span asp-validation-for="StudentName" class="text-danger"></span>
 
             </div>
@@ -27,13 +28,13 @@
         <div class=" row mb-3">
             <div class=" col mb-3">
                 <label asp-for="Address"></label>
-                <input asp-for="Address" class="form-control" />
+                <input asp-for="Address" class="form-control rounded-4" />
                 <span asp-validation-for="Address" class="text-danger"></span>
 
             </div>
             <div class=" col mb-3">
                 <label asp-for="Faculty"></label>
-                <input asp-for="Faculty" class="form-control" />
+                <input asp-for="Faculty" class="form-control rounded-4" />
                 <span asp-validation-for="Faculty" class="text-danger"></span>
 
             </div>

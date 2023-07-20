@@ -4,6 +4,7 @@
 @using Library_Management_System.Models
 
 @model Library_Management_System.DTO.IssueBookDto
+<link href="~/css/BoostrapTheme.css" rel="stylesheet" />
 
 <form method="post" asp-action="Issue_Book" asp-controller="Admin">
     <div class="border p-3 mt-4">
@@ -15,13 +16,13 @@
            
          <div class="col">
             <label asp-for="BookId"></label>
-                <input type="number" asp-for="BookId" class="form-control" />
+                <input type="number" asp-for="BookId" class="form-control rounded-4" />
                 <span asp-validation-for="BookId" class="text-danger"></span>
             </div>
        
         <div class=" col mb-3">
             <label asp-for="StudentId"></label>
-                <input type="number"  asp-for="StudentId" class="form-control" />
+                <input type="number" asp-for="StudentId" class="form-control rounded-4" />
                 <span asp-validation-for="StudentId" class="text-danger"></span>
 
         </div>

@@ -2,6 +2,7 @@
     Layout = "Layout1";
 }
 @using Library_Management_System.DTO;
+<link href="~/css/BoostrapTheme.css" rel="stylesheet" />
 @model User
 <form method="post" asp-controller="Admin" asp-action="DeleteUser">
    <input asp-for="UserId" hidden />
@@ -14,12 +15,12 @@
       <div class=" row mb-3">
         <div class=" col mb-3">
             <label asp-for="UserId"></label>
-            <input disabled asp-for="UserId" class="form-control" />
+                <input disabled asp-for="UserId" class="form-control rounded-4" />
             <span asp-validation-for="UserId" class="text-danger"></span>
         </div>
         <div class=" col mb-3">
             <label asp-for="Username"></label>
-            <input disabled asp-for="Username" class="form-control" />
+                <input disabled asp-for="Username" class="form-control rounded-4" />
             <span asp-validation-for="Username" class="text-danger"></span>
 
         </div>
@@ -27,7 +28,7 @@
         <div class=" row mb-3">
             <div class=" col mb-3">
             <label asp-for="Password"></label>
-            <input disabled asp-for="Password" class="form-control" />
+                <input disabled asp-for="Password" class="form-control rounded-4" />
             <span asp-validation-for="Password" class="text-danger"></span>
 
         </div>

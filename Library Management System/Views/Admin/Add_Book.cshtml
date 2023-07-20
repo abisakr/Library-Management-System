@@ -2,6 +2,7 @@
     Layout = "Layout1";
 }
 @model Book
+<link href="~/css/BoostrapTheme.css" rel="stylesheet" />
 
 
 <form method="post">
@@ -15,13 +16,13 @@
 
            <div class=" col mb-3">
             <label asp-for="BookName"></label>
-            <input asp-for="BookName" class="form-control" />
+            <input asp-for="BookName" class="form-control rounded-4" />
             <span asp-validation-for="BookName" class="text-danger"></span>
             </div>
 
             <div class=" col mb-3">
             <label asp-for="Auther"></label>
-            <input asp-for="Auther" class="form-control" />
+                <input asp-for="Auther" class="form-control rounded-4" />
             <span asp-validation-for="Auther" class="text-danger"></span>
 
           </div>
@@ -30,19 +31,19 @@
 
         <div class="col mb-3">
                 <label>Faculty</label>
-            <input asp-for="BFaculty" class="form-control" />
+                <input asp-for="BFaculty" class="form-control rounded-4" />
             <span asp-validation-for="BFaculty" class="text-danger"></span>
 
         </div>
         <div class="col mb-3">
             <label>Quantity</label>
-            <input asp-for="NoOfBooks" class="form-control" />
+                <input asp-for="NoOfBooks" class="form-control rounded-4" />
             <span asp-validation-for="NoOfBooks" class="text-danger"></span>
 
         </div>
        </div>
         <button class=" btn btn-primary " type="submit" style="width:150px">Add Book</button>
-        <a asp-controller="Home" asp-action="Button" class=" btn btn-secondary " style="width:150px">Back</a>
+        <a asp-controller="Admin" asp-action="Manage_Book" class=" btn btn-secondary " style="width:150px">Back</a>
     </div>
 </form>
 

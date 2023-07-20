@@ -5,6 +5,8 @@
 @{
     Layout = "Layout1";
 }
+<link href="~/css/BoostrapTheme.css" rel="stylesheet" />
+
 <form method="post">
     
     <div class="border p-3 mt-4">
@@ -16,12 +18,12 @@
         <div class="row mb-3">
             <div class="col mb-3">
                 <label asp-for="BookId" ></label>
-                <input type="number"  asp-for="BookId" class="form-control" />
+                <input type="number" asp-for="BookId" class="form-control rounded-4" />
                 <span asp-validation-for="BookId" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="StudentId"></label>
-                <input type="number" asp-for="StudentId" class="form-control" />
+                <input type="number" asp-for="StudentId" class="form-control rounded-4" />
                 <span asp-validation-for="StudentId" class="text-danger"></span>
 
             </div>

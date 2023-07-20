@@ -1,8 +1,8 @@
-﻿body {
+﻿﻿body {
     margin: 0;
     color: #6a6f8c;
-
-    background: url('../images/lo.jpg') no-repeat center center fixed;
+    /*background: url('~/Images/lo.jpg') no-repeat center center fixed;*/
+    background-color:aquamarine;
     background-size: cover;
     font: 600 16px/18px 'Open Sans',sans-serif;
 }

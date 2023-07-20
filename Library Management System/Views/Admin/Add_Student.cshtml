@@ -4,6 +4,7 @@
 @model Student
 
 
+<link href="~/css/BoostrapTheme.css" rel="stylesheet" />
 
 <form method="post">
     <div class="border p-3 mt-4">
@@ -16,13 +17,13 @@
 
             <div class=" col mb-3">
                 <label asp-for="StudentName"></label>
-                <input asp-for="StudentName" class="form-control" />
+                <input asp-for="StudentName" class="form-control  rounded-4" />
                 <span asp-validation-for="StudentName" class="text-danger"></span>
             </div>
 
             <div class=" col mb-3">
                 <label asp-for="Address"></label>
-                <input asp-for="Address" class="form-control" />
+                <input asp-for="Address" class="form-control  rounded-4" />
                 <span asp-validation-for="Address" class="text-danger"></span>
 
             </div>
@@ -31,7 +32,7 @@
 
             <div class="col mb-3">
                 <label>Faculty</label>
-                <input asp-for="Faculty" class="form-control" />
+                <input asp-for="Faculty" class="form-control  rounded-4" />
                 <span asp-validation-for="Faculty" class="text-danger"></span>
 
             </div>

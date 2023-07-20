@@ -2,8 +2,9 @@
     Layout = "Layout1";
 }
 @model IEnumerable<Student>
+<link href="~/css/BoostrapTheme.css" rel="stylesheet" />
 
-<div class="border container p-3">
+<div class="border container p-3 mt-4">
     <div class="row pt-4">
         <div class="col-6">
             <h2 class="text-primary">Manage Students</h2>
@@ -16,7 +17,7 @@
 
 
     <table id="example" class="table table-bordered table-striped " style="width:100%">
-        <thead>
+        <thead class="table-bordered">
             <tr>
                 <th>
                     Student Id
@@ -36,7 +37,7 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="table-bordered">
             @foreach (var obj in Model)
             {
                 <tr>

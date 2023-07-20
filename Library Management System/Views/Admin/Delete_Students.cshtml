@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "Layout1";
 }
+<link href="~/css/BoostrapTheme.css" rel="stylesheet" />
 @model Student
 <form method="post" asp-controller="Admin" asp-action="DeleteBook">
     <input asp-for="StudentId" hidden />
@@ -13,12 +14,12 @@
         <div class=" row mb-3">
             <div class=" col mb-3">
                 <label asp-for="StudentId"></label>
-                <input disabled asp-for="StudentId" class="form-control" />
+                <input disabled asp-for="StudentId" class="form-control rounded-4" />
                 <span asp-validation-for="StudentId" class="text-danger"></span>
             </div>
             <div class=" col mb-3">
                 <label asp-for="StudentName"></label>
-                <input disabled asp-for="StudentName" class="form-control" />
+                <input disabled asp-for="StudentName" class="form-control rounded-4" />
                 <span asp-validation-for="StudentName" class="text-danger"></span>
 
             </div>
@@ -26,13 +27,13 @@
         <div class=" row mb-3">
             <div class=" col mb-3">
                 <label asp-for="Address"></label>
-                <input disabled asp-for="Address" class="form-control" />
+                <input disabled asp-for="Address" class="form-control rounded-4" />
                 <span asp-validation-for="Address" class="text-danger"></span>
 
             </div>
             <div class=" col mb-3">
                 <label>Faculty</label>
-                <input disabled asp-for=" Faculty" class="form-control" />
+                <input disabled asp-for=" Faculty" class="form-control rounded-4" />
                 <span asp-validation-for="Faculty" class="text-danger"></span>
 
             </div>

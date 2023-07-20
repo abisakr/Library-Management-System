@@ -28,11 +28,13 @@ namespace Library_Management_System.Controllers
         {
             IEnumerable<Book> objBooks = _context.Books;
 
-
             return View(objBooks);
+
         }
+
         public IActionResult Add_Book()
         {
+
             return View();
         }
         [HttpPost]
@@ -41,12 +43,12 @@ namespace Library_Management_System.Controllers
 
 
 
-
             if (!ModelState.IsValid)
             {
                 _context.Books.Add(book);
                 _context.SaveChanges();
-                TempData["Sucess"] = "Book Added Sucessfully";
+                TempData["Success"] = "Book Added Sucessfully";
+
                 return RedirectToAction("Manage_Book", "Admin");
             }
             return View(book);
@@ -99,9 +101,8 @@ namespace Library_Management_System.Controllers
                 return NotFound();
             _context.Books.Remove(book1);
             _context.SaveChanges();
-            TempData["sucess"] = "Book Deleted Sucessfully";
+            TempData["success"] = "Book Deleted Sucessfully";
             return RedirectToAction("Manage_Book");
-
 
         }
         public IActionResult Issue_Book()
@@ -205,38 +206,38 @@ namespace Library_Management_System.Controllers
             return View(student);
 
         }
-        //[HttpPost]
-        //public IActionResult Edit_Students(Student student)
-        //{
-
-        //    if (!ModelState.IsValid)
-        //    {
-        //        _context.Update(student);
-        //        _context.SaveChanges();
-
-        //        TempData["success"] = "Book Edited Successfully";
-
-        //        return RedirectToAction("Manage_Students");
-        //    }
-        //    return NotFound();
-        //}
-
         [HttpPost]
-        public IActionResult Edit_Students(StudentDto student)
+        public IActionResult Edit_Students(Student student)
         {
-            var mapper = _mapper.Map<Student>(student);
-            if (mapper.StudentId == null || mapper.StudentId == 0)
-                return NotFound();
-            var student1 = _context.Students.Find(mapper.StudentId);
-            if (mapper == null)
-                return NotFound();
-            _context.Update(student1);
-            _context.SaveChanges();
-            TempData["success"] = "Student Edited Successfully";
-            return RedirectToAction("Manage_Students");
 
+            if (!ModelState.IsValid)
+            {
+                _context.Update(student);
+                _context.SaveChanges();
 
+                TempData["success"] = "Book Edited Successfully";
+
+                return RedirectToAction("Manage_Students");
+            }
+            return NotFound();
         }
+
+        //[HttpPost]
+        //public IActionResult Edit_Students(StudentDto student)
+        //{
+        //    var mapper = _mapper.Map<Student>(student);
+        //    if (mapper.StudentId == null || mapper.StudentId == 0)
+        //        return NotFound();
+        //    var student1 = _context.Students.Find(mapper.StudentId);
+        //    if (mapper == null)
+        //        return NotFound();
+        //    _context.Update(student1);
+        //    _context.SaveChanges();
+        //    TempData["success"] = "Student Edited Successfully";
+        //    return RedirectToAction("Manage_Students");
+
+
+        //}
 
 
         //public IActionResult View_Students()
@@ -290,6 +291,7 @@ namespace Library_Management_System.Controllers
                 _context.SaveChanges();
 
 
+                TempData["success"] = "User Added Successfully";
 
                 return RedirectToAction("Manage_User", "Admin");
             }
