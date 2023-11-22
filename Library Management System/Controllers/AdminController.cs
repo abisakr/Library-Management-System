@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library_Management_System.Controllers
 {
-   
+
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -38,14 +38,15 @@ namespace Library_Management_System.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Add_Book(Book book)
+        public IActionResult Add_Book(BookDto book)
         {
 
 
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                _context.Books.Add(book);
+                var result = _mapper.Map<Book>(book);
+                _context.Books.Add(result);
                 _context.SaveChanges();
                 TempData["Success"] = "Book Added Sucessfully";
 
@@ -66,19 +67,31 @@ namespace Library_Management_System.Controllers
 
         }
         [HttpPost]
-        public IActionResult EditBook(Book book)
+  
+        public IActionResult EditBook(BookDto book)
         {
-
-            if (!ModelState.IsValid)
+            try
             {
-                _context.Update(book);
-                _context.SaveChanges();
-             
-                TempData["success"] = "Book Edited Successfully";
+                if (ModelState.IsValid)
+                {
 
-                return RedirectToAction("Manage_Book");
+
+                    var results = _mapper.Map<Book>(book);
+                    _context.Update(results);
+                    _context.SaveChanges();
+
+                    TempData["success"] = "Book Edited Successfully";
+
+                    return RedirectToAction("Manage_Book");
+                }
+                return NotFound();
             }
-            return NotFound();
+            catch (Exception e)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, e);
+            }
+         
         }
 
         public IActionResult Delete_Book(int? id)
@@ -94,15 +107,18 @@ namespace Library_Management_System.Controllers
         [HttpPost]
         public IActionResult DeleteBook(Book book)
         {
-            if (book.BookId == null || book.BookId == 0)
+
+            var book1 = _context.Books.FirstOrDefault(a => a.BookId == book.BookId);
+            if (book1 != null)
+            {
+                _context.Books.Remove(book1);
+                _context.SaveChanges();
+                TempData["success"] = "Book Deleted Sucessfully";
+                return RedirectToAction("Manage_Book");
+            }
                 return NotFound();
-            var book1 = _context.Books.Find(book.BookId);
-            if (book == null)
-                return NotFound();
-            _context.Books.Remove(book1);
-            _context.SaveChanges();
-            TempData["success"] = "Book Deleted Sucessfully";
-            return RedirectToAction("Manage_Book");
+       
+            
 
         }
         public IActionResult Issue_Book()
@@ -120,8 +136,6 @@ namespace Library_Management_System.Controllers
 
 
                 var book = _context.Books.Where(x => x.BookId == issue.BookId).ToList().FirstOrDefault();
-
-
                 var student = _context.Students.Where(x => x.StudentId == issue.StudentId).ToList().FirstOrDefault();
 
                 var studentBook = new Models.StudentBook();
@@ -172,8 +186,9 @@ namespace Library_Management_System.Controllers
         public IActionResult Manage_Students()
         {
 
-            IEnumerable<Student> stud = _context.Students;
-            return View(stud);
+           var stud = _context.Students.ToList();
+           var x =_mapper.Map<List<StudentDto>>(stud);
+            return View(x);
 
         }
         //public IActionResult Add_Student()
@@ -199,7 +214,7 @@ namespace Library_Management_System.Controllers
         {
             if (id == null || id == 0)
                 return NotFound();
-            var student = _context.Students.Find(id);
+            var student = _context.Students.FirstOrDefault(a => a.StudentId == id);
             if (student == null)
                 return NotFound();
 
@@ -207,12 +222,13 @@ namespace Library_Management_System.Controllers
 
         }
         [HttpPost]
-        public IActionResult Edit_Students(Student student)
+        public IActionResult Edit_Students(StudentDto student)
         {
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                _context.Update(student);
+                var mapper = _mapper.Map<Student>(student);
+                _context.Update(mapper);
                 _context.SaveChanges();
 
                 TempData["success"] = "Book Edited Successfully";

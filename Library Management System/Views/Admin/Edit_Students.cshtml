@@ -1,10 +1,10 @@
-﻿@using Library_Management_System.DTO;
+﻿
+@using Library_Management_System.Models;
 @{
     Layout = "Layout1";
 }
 <link href="~/css/BoostrapTheme.css" rel="stylesheet" />
-
-@model  StudentDto
+@model Student
 <form method="post" asp-controller="Admin" asp-action="Edit_Students">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
@@ -14,8 +14,8 @@
 
         <div class=" row mb-3">
             <div class=" col mb-3">
-                <label asp-for="StudentId"></label> 
-                <input asp-for="StudentId" class="form-control rounded-4" />
+                <label   asp-for="StudentId"></label> 
+                <input disabled asp-for="StudentId" class="form-control rounded-4" />
                 <span asp-validation-for="StudentId" class="text-danger"></span>
             </div>
             <div class=" col mb-3">

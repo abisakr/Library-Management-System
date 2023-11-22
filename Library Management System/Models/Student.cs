@@ -15,8 +15,8 @@ namespace Library_Management_System.Models
         public DateTime? ReturnDate { get; set; }
 
         [ForeignKey("User")]
-		public int UserId { get; set; }
-		public User User { get; set; }
+        public int? UserId { get; set; } 
+		public User? User { get; set; }
 		public ICollection<StudentBook> StudentBooks { get; set; }
 
 	}

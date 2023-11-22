@@ -8,13 +8,14 @@ namespace Library_Management_System.Helper
     {
         public MappingProfiles()
         {
-            CreateMap<User, UserDto>().ReverseMap();
-            CreateMap<UserDto,Student>().ReverseMap();
-            CreateMap<IssueBookDto, Student>().ReverseMap();
-            CreateMap<IssueBookDto, Book>().ReverseMap();
-            CreateMap<ReturnDto, Book>().ReverseMap();
-            CreateMap<ReturnDto, Student>().ReverseMap();
-            CreateMap<Student, StudentDto>().ReverseMap();
+            this.CreateMap<User, UserDto>().ReverseMap();
+            this.CreateMap<UserDto,Student>().ReverseMap();
+            this.CreateMap<IssueBookDto, Student>().ReverseMap();
+            this.CreateMap<IssueBookDto, Book>().ReverseMap();
+            this.CreateMap<ReturnDto, Book>().ReverseMap();
+            this.CreateMap<ReturnDto, Student>().ReverseMap();
+            this.CreateMap<Student, StudentDto>().ReverseMap();
+            this.CreateMap<Book,BookDto>().ReverseMap();
         }
     }
 }
