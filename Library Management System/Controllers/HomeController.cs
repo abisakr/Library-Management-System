@@ -1,11 +1,9 @@
 ﻿using Library_Management_System.Data;
 using Library_Management_System.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using System.Runtime.Intrinsics.X86;
 
 namespace Library_Management_System.Controllers
 {
@@ -28,10 +26,12 @@ namespace Library_Management_System.Controllers
         {
             return View();
         }
+
         public IActionResult privacy()
         {
             return View();
         }
+
         public IActionResult User_Login_Page()
         {
             var user1 = Request.Cookies["User"];
@@ -39,13 +39,14 @@ namespace Library_Management_System.Controllers
             {
                 return View();
             }
-            return RedirectToAction("Button","User");
+            return RedirectToAction("Button", "User");
 
         }
+
         [HttpPost]
         public IActionResult User_Login_Page(User user)
         {
-           
+
             var status = _context.Users.Include(a => a.Student).FirstOrDefault(a => a.Username == user.Username && a.Password == user.Password);
             if (status == null)
             {
@@ -57,7 +58,7 @@ namespace Library_Management_System.Controllers
 
                 cookieOptions.Expires = DateTime.Now.AddDays(30);
                 cookieOptions.Path = "/";
-                Response.Cookies.Append("User",Convert.ToString(status.Student.StudentId), cookieOptions);
+                Response.Cookies.Append("User", Convert.ToString(status.Student.StudentId), cookieOptions);
 
                 return RedirectToAction("Button", "User");
             }
@@ -66,15 +67,13 @@ namespace Library_Management_System.Controllers
 
         }
 
-
         [HttpGet]
         public IActionResult Login()
         {
-           
+
             return View();
         }
 
-    
         [HttpPost]
         public IActionResult Login(Admin admin)
         {
@@ -91,9 +90,6 @@ namespace Library_Management_System.Controllers
 
 
         }
-
-
-
 
         public IActionResult LogOut()
 
@@ -117,7 +113,6 @@ namespace Library_Management_System.Controllers
 
 
         }
-
 
         public IActionResult Button()
         {
