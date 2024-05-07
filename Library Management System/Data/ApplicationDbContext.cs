@@ -10,10 +10,10 @@ namespace Library_Management_System.Data
         {
 
         }
-        public DbSet<Book> Books { get; set; }
-        public DbSet<Student> Students { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<StudentBook> StudentBooks { get; set; }
-        public DbSet<Admin> tbl_admin { get; set; }//TblAdmin should be there as pascal case
+        public DbSet<Book> BookTbl { get; set; }
+        public DbSet<Student> StudentTbl { get; set; }
+        public DbSet<User> UserTbl { get; set; }
+        public DbSet<StudentBook> StudentBookTbl { get; set; }
+        public DbSet<Admin> AdminTbl { get; set; }
     }
 }

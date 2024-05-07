@@ -1,7 +1,7 @@
 using Library_Management_System.Data;
-using Library_Management_System.Repositories.Admin;
+using Library_Management_System.Repositories.AdminApp;
 using Library_Management_System.Repositories.Home;
-using Library_Management_System.Repositories.User;
+using Library_Management_System.Repositories.UserApp;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,6 +43,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Indexx}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

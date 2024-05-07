@@ -1,46 +1,48 @@
-﻿using Library_Management_System.Data;
-using Library_Management_System.Models;
+﻿using Library_Management_System.Repositories.UserApp;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Library_Management_System.Controllers
 {
     public class UserController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public UserController(ApplicationDbContext context)
+        private readonly IUserRepository _userRepository;
+
+        public UserController(IUserRepository userRepository)
         {
-            _context = context;
+            _userRepository = userRepository;
         }
 
         public IActionResult Admin_Login_Page()
         {
             return RedirectToAction("Admin_Login", "Home");
         }
+
         public IActionResult Button()
         {
             return View();
 
         }
-        public IActionResult Available_Books()
+
+        public IActionResult AvailableBooks()
         {
-            IEnumerable<Book> objBooks = _context.Books;
-            return View(objBooks);
+            var result = _userRepository.AvailableBooks();
+            return View(result);
         }
-        public IActionResult Request_Books()
+
+        public IActionResult RequestBook()
         {
             return View();
         }
-        public IActionResult My_Books()
+
+        public IActionResult MyBooks()
         {
             var user = Request.Cookies["User"];
             if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            var userId = Convert.ToInt32(user);
-            var books = _context.StudentBooks.Include(a => a.Book).Where(a => a.StudentId == userId).ToList();
-            return View(books);
+            var result = _userRepository.MyBooks(user);
+            return View(result);
         }
     }
 }

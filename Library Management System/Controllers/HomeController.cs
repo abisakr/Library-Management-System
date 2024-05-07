@@ -1,8 +1,8 @@
 ﻿using Library_Management_System.Data;
 using Library_Management_System.Models;
+using Library_Management_System.Repositories.Home;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace Library_Management_System.Controllers
@@ -13,26 +13,28 @@ namespace Library_Management_System.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IHomeRepository _homeRepository;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IHomeRepository homeRepository)
         {
             _logger = logger;
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _homeRepository = homeRepository;
         }
 
-        public IActionResult Indexx()
+        public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult privacy()
+        public IActionResult Privacy()
         {
             return View();
         }
 
-        public IActionResult User_Login_Page()
+        public IActionResult UserLoginPage()
         {
             var user1 = Request.Cookies["User"];
             if (user1 == null)
@@ -44,10 +46,9 @@ namespace Library_Management_System.Controllers
         }
 
         [HttpPost]
-        public IActionResult User_Login_Page(User user)
+        public IActionResult UserLoginPage(User user)
         {
-
-            var status = _context.Users.Include(a => a.Student).FirstOrDefault(a => a.Username == user.Username && a.Password == user.Password);
+            var status = _homeRepository.UserLoginPage(user);
             if (status == null)
             {
                 ViewBag.LoginStatus = 0;
@@ -55,16 +56,12 @@ namespace Library_Management_System.Controllers
             else
             {
                 var cookieOptions = new CookieOptions();
-
                 cookieOptions.Expires = DateTime.Now.AddDays(30);
                 cookieOptions.Path = "/";
                 Response.Cookies.Append("User", Convert.ToString(status.Student.StudentId), cookieOptions);
-
                 return RedirectToAction("Button", "User");
             }
-
             return View(user);
-
         }
 
         [HttpGet]
@@ -77,7 +74,7 @@ namespace Library_Management_System.Controllers
         [HttpPost]
         public IActionResult Login(Admin admin)
         {
-            var status = _context.tbl_admin.Where(a => a.Username == admin.Username && a.Password == admin.Password).FirstOrDefault();
+            var status = _homeRepository.Login(admin);
             if (status == null)
             {
                 ViewBag.LoginStatus = 0;
@@ -87,38 +84,19 @@ namespace Library_Management_System.Controllers
             {
                 return RedirectToAction("Button", "Home");
             }
-
-
         }
 
         public IActionResult LogOut()
-
         {
-            //CookieOptions.Expires = DateTime.Now.AddSeconds(1);
-            // Session.Abandon();
-            //HttpContext.Current.Session.Abandon();
-            //string v = Request.Cookies["UserId"];
             var cookieOptions = new CookieOptions();
             cookieOptions.Expires = DateTime.Now.AddDays(-1d);
-
-
             Response.Cookies.Append("User", "null", cookieOptions);
-            //var cookieOptions1 = new CookieOptions();
-            //cookieOptions1.Expires = DateTime.Now.AddDays(-1d);
-
-            //  Response.Cookies.Append("SomeCookie", "null", cookieOptions);
-            //  var UserId = Int32.Parse(Request.Cookies["UserId"]);
-
-            return RedirectToAction(actionName: "Indexx", controllerName: "Home");
-
-
+            return RedirectToAction(actionName: "Index", controllerName: "Home");
         }
 
         public IActionResult Button()
         {
-
             return View();
-
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -39,7 +39,6 @@
     <Content Remove="C:\Users\ACER\.nuget\packages\bootstrap\5.3.0\contentFiles\any\any\wwwroot\css\bootstrap.min.css.map" />
     <Content Remove="C:\Users\ACER\.nuget\packages\bootstrap\5.3.0\contentFiles\any\any\wwwroot\js\bootstrap.min.js" />
     <Content Remove="C:\Users\ACER\.nuget\packages\bootstrap\5.3.0\contentFiles\any\any\wwwroot\js\bootstrap.min.js.map" />
-    <Content Remove="Views\Home\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
